@@ -78,7 +78,7 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                var role = await _signInManager.UserManager.GetUsersInRoleAsync("Admin");
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

@@ -50,14 +50,30 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
 
             [Required]
-            [Display(Name = "UserName")]
+            [Display(Name = "Username")]
             public string UserName { get; set; }
+
+            [Required]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            [Required]
+            [Display(Name = "Last name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Phone number")]
+            [Phone]
+            public string PhoneNumber { get; set; } = string.Empty;
+
+            //[Display(Name = "Picture")]
+            //public int Picture { get; set; }
+
+            [Required]
+            [Display(Name = "Birth date")]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            public DateTime BirthDate { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -69,6 +85,20 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Emergency Email")]
+            public string EmergencyEmail1 { get; set; }
+
+            [EmailAddress]
+            [Display(Name = "Emergency Email2")]
+            public string EmergencyEmail2 { get; set; } = "email@mail.com";
         }
 
         public void OnGet(string? returnUrl = null)
@@ -83,6 +113,13 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
             {
                 var user = _pool.GetUser(Input.UserName);
                 user.Attributes.Add(CognitoAttribute.Email.AttributeName, Input.Email);
+                user.Attributes.Add(CognitoAttribute.Name.AttributeName, Input.Name);
+                user.Attributes.Add(CognitoAttribute.MiddleName.AttributeName, Input.LastName);
+                user.Attributes.Add(CognitoAttribute.PhoneNumber.AttributeName, Input.PhoneNumber);
+                user.Attributes.Add(CognitoAttribute.BirthDate.AttributeName, Input.BirthDate.ToString("d"));
+                user.Attributes.Add(CognitoAttribute.Picture.AttributeName, "");
+                user.Attributes.Add("custom:emergencyContact1", Input.EmergencyEmail1);
+                user.Attributes.Add("custom:emergencyContact2", Input.EmergencyEmail2);
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
