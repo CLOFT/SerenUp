@@ -17,8 +17,13 @@
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            //if (!User.Identity.IsAuthenticated)
+            //{
+            //    return Redirect("/Identity/Account/Login");
+            //}
+            //return Page();
 
         }
     }

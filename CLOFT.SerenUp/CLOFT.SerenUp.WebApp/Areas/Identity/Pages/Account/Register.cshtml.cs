@@ -108,6 +108,7 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
+            var results = await _userManager.GetUsersAsync();
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
@@ -120,6 +121,8 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                 user.Attributes.Add(CognitoAttribute.Picture.AttributeName, "");
                 user.Attributes.Add("custom:emergencyContact1", Input.EmergencyEmail1);
                 user.Attributes.Add("custom:emergencyContact2", Input.EmergencyEmail2);
+
+                
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

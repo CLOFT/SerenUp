@@ -1,5 +1,6 @@
 ﻿namespace CLOFT.SerenUp.WebApp.Pages
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,8 +13,13 @@
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            //if (!User.Identity.IsAuthenticated)
+            //{
+            //    return Redirect("/Identity/Account/Login");
+            //}
+            //return Page();
         }
     }
 }
