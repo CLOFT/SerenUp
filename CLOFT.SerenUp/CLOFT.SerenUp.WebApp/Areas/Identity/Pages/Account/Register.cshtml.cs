@@ -108,7 +108,6 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            var results = await _userManager.GetUsersAsync();
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {

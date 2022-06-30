@@ -17,7 +17,7 @@
             _logger = logger;
         }
 
-        public IActionResult OnGet()
+        public void OnGet()
         {
             //if (!User.Identity.IsAuthenticated)
             //{
