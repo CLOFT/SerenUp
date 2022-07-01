@@ -5,8 +5,8 @@
     ViewData["Title"] = "Log in";
 }
 
-<h2>@ViewData["Title"]</h2>
-<div class="row">
+
+<div class="d-flex row" style="align-items: center; height:100vh; background: linear-gradient(90deg, rgba(255,255,255,1) 32%, rgba(68,180,125,1) 100%, rgba(255,189,140,1) 100%);">
     <div class="col-md-4">
         <section>
             <form method="post">
@@ -32,18 +32,23 @@
                     </div>
                 </div>
                 <div class="form-group mb-3">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="btn btn-primary" style="background-color:#44b47d; border-color:#44b47d;">Log in</button>
                 </div>
                 <div class="form-group mb-3">
-                    <p>
-                        <a asp-page="./ForgotPassword">Forgot your password?</a>
+                    <p >
+                        <a asp-page="./ForgotPassword" style="color:#44b47d;">Forgot your password?</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" style="color:#44b47d;">Register as a new user</a>
                     </p>
                 </div>
             </form>
         </section>
+    </div>
+    <div class="col-md-4">
+        <div style="width: 100vh; text-align: end;">
+            <img src="~/Resource/login.png"></img>
+        </div>
     </div>
 </div>
 

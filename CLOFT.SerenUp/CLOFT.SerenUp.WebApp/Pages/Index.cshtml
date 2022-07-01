@@ -7,10 +7,10 @@
 
 <div class="ml-5">
     <div class="d-flex justify-content-between">
-        <h1 class="mb-lg-5">Welcome Steve</h1>
+        <h1 class="mb-lg-5"><span style="color:gray">Welcome </span>Steve</h1>
         <div class="mr-5">
-            <span id="day"></span>
-            <h3 id="clock"></h3>
+            <p style="color:red;"> <span id="dayOfWeek"></span> <span id="week"></span> </p>
+            <h3 id="clock"> <span id="day"></span> <span id="mounth"></span> <span id="year"></span> </h3>
         </div>
     </div>
 
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="card text-white" style="position:relative; background: linear-gradient(90deg, rgba(186,130,127,1) 0%, rgba(150,75,75,1) 72%); box-shadow: 5px 10px 8px #C19F9C; border-style:none; border-radius: 20px;">
+        <div class="card text-white" style="position:relative; background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
 
             <div style="top:15%; left:50%; position:absolute;" class="heart">
                 <svg style="" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" fill-opacity="0.3" class="bi bi-heart-pulse" viewBox="0 0 16 16">
@@ -94,15 +94,14 @@
         <div id="batteryCard" class="card text-white" style="position:relative; background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
 
             <div style="top:15%; left:50%; position:absolute;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" fill-opacity="0.3" class="bi bi-battery-half" viewBox="0 0 16 16">
-                    <path d="M2 6h5v4H2V6z" />
-                    <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2zm10 1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h10zm4 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" />
-                </svg>
+                <svg id="emptyBattery" class=""  xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.3" fill="currentColor" class="bi bi-battery" viewBox="0 0 16 16"> <path d="M0 6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6zm2-1a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H2zm14 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="white"></path> </svg>
+                <svg id="halfBattery" class="" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.3" fill="currentColor" class="bi bi-battery-half" viewBox="0 0 16 16"> <path d="M2 6h5v4H2V6z" fill="white"></path> <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2zm10 1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h10zm4 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="white"></path> </svg>
+                <svg id="fullBattery" class="" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.3" fill="currentColor" class="bi bi-battery-full" viewBox="0 0 16 16"> <path d="M2 6h10v4H2V6z" fill="white"></path> <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2zm10 1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h10zm4 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="white"></path> </svg>
             </div>
             <div class="card-body" style="position:relative">
                 <div style="z-index:99;">
                     <h4 class="card-title">Battery</h4>
-                    <p id="battery" style="font-size:4rem">80</p>
+                    <p id="batteryValue" style="font-size:4rem">80</p>
                 </div>
             </div>
         </div>

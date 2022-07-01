@@ -49,9 +49,31 @@ setInterval(UpdateHour, 1000);
 //setInterval(UpdateDash, 2000);
 setInterval(UpdateDashFake, 2000);
 
+
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+]
+
 function UpdateHour() {
     const d = new Date();
-    document.getElementById("clock").innerHTML = d.toLocaleString();
+    document.getElementById("dayOfWeek").innerHTML = "Day " + d.getDay();
+    document.getElementById("week").innerHTML = "Week " + d.getDate();
+    document.getElementById("day").innerHTML = d.getDate() + "th";
+    var indexMounth = d.getMonth();
+    document.getElementById("mounth").innerHTML = months[indexMounth];
+    document.getElementById("year").innerHTML = d.getFullYear();
+    //document.getElementById("clock").innerHTML = d.toLocaleString();
 }
 
 
@@ -63,17 +85,33 @@ function UpdateDashFake() {
     document.getElementById("systolicPress").innerHTML = Math.floor(Math.random() * 200);
     document.getElementById("dyastolicPress").innerHTML = Math.floor(Math.random() * 100) + " mmHg";
     var battery = Math.floor(Math.random() * 100);
+    document.getElementById("batteryValue").innerHTML = battery + " %";
 
     if (battery < 20) {
-        document.getElementById("battery").style.color = "rgb(240, 119, 110)";
+        document.getElementById("emptyBattery").classList.remove('d-none');
+        document.getElementById("fullBattery").classList.add('d-none');
+        document.getElementById("halfBattery").classList.add('d-none');
+
+        document.getElementById("batteryValue").style.color = "rgb(240, 119, 110)";
         document.getElementById("batteryCard").classList.add('danger');
         document.getElementById("allertDiv").classList.remove('d-none');
-    } else {
-        document.getElementById("battery").style.color = "white";
+    } else if (battery >= 20 && battery < 65) {
+        document.getElementById("emptyBattery").classList.add('d-none');
+        document.getElementById("fullBattery").classList.add('d-none');
+        document.getElementById("halfBattery").classList.remove('d-none');
+
+        document.getElementById("batteryValue").style.color = "white";
+        document.getElementById("batteryCard").classList.remove('danger');
+        document.getElementById("allertDiv").classList.add('d-none');
+    } else if(battery >= 65){
+        document.getElementById("emptyBattery").classList.add('d-none');
+        document.getElementById("fullBattery").classList.remove('d-none');
+        document.getElementById("halfBattery").classList.add('d-none');
+
+        document.getElementById("batteryValue").style.color = "white";
         document.getElementById("batteryCard").classList.remove('danger');
         document.getElementById("allertDiv").classList.add('d-none');
     }
-    document.getElementById("battery").innerHTML = battery + " %";
 
     // document.getElementById("allarms").innerHTML = "Fallen detected";
 }
