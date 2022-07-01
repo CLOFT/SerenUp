@@ -7,6 +7,7 @@
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        
 
         [BindProperty]
         [DisplayFormat(DataFormatString = "{0: MM/dd/yyyy}")]

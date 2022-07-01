@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Amazon.AspNetCore.Identity.Cognito;
 using Amazon.Extensions.CognitoAuthentication;
+using CLOFT.SerenUp.WebApp.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -30,17 +31,20 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
         private readonly CognitoUserManager<CognitoUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly CognitoUserPool _pool;
+        private readonly IBraceletsService _braceletService;
 
         public RegisterModel(
             UserManager<CognitoUser> userManager,
             SignInManager<CognitoUser> signInManager,
             ILogger<RegisterModel> logger,
-            CognitoUserPool pool)
+            CognitoUserPool pool,
+            IBraceletsService braceletsService)
         {
             _userManager = userManager as CognitoUserManager<CognitoUser>;
             _signInManager = signInManager;
             _logger = logger;
             _pool = pool;
+            _braceletService = braceletsService;
         }
 
         [BindProperty]
@@ -101,13 +105,18 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
             public string EmergencyEmail2 { get; set; } = "email@mail.com";
         }
 
-        public void OnGet(string? returnUrl = null)
+        public List<Bracelet> bracelets  { get; set; }
+
+        public async Task OnGet(string? returnUrl = null)
         {
+            bracelets = await _braceletService.GetBracelets();
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(Bracelet bracelet, string? returnUrl = null)
         {
+            await _braceletService.AssociateBracialetToUser(bracelet);
+
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
