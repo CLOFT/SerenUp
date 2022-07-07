@@ -5,33 +5,38 @@
     ViewData["Page"] = "home";
 }
 
-<div class="ml-5">
-    <div class="d-flex justify-content-between">
-        <h1 class="mb-lg-5"><span style="color:gray">Welcome </span>Steve</h1>
+<div class="ml-5 mr-3">
+    <div class="d-flex justify-content-between pt-5">
+        <h1 class="mb-lg-5"><span style="color:gray">Welcome </span>@Model.User.Identity.Name</h1>
         <div class="mr-5">
             <p style="color:red;"> <span id="dayOfWeek"></span> <span id="week"></span> </p>
             <h3 id="clock"> <span id="day"></span> <span id="mounth"></span> <span id="year"></span> </h3>
         </div>
     </div>
 
-    <div id="allertDiv" class="d-none alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>WARNING!</strong> Batery low!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div style="width: 100%; height:80px;">
+        <div id="allertDiv" class="d-none alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>WARNING!</strong> Batery low!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
 
     <div class="card-deck mb-5">
 
+
         <div class="card text-white" style="position:relative; background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(75,134,179,1) 100%); border-style: none;box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
 
-            <div style="top:15%; left:50%; position:absolute;">
-                <i class="fa fa-spinner fa-spin" aria-hidden="true" style="font-size:150px; opacity:0.3;"></i>
-            </div>
-            <div class="card-body" style="position:relative">
-                <div style="z-index:99;">
-                    <h4 class="card-title">Serendipity </h4>
-                    <p id="serendipity" style="font-size:4rem">84 bpm</p>
+            <div type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <div style="top:13%; left:50%; position:absolute;">
+                    <i class="fa fa-spinner fa-spin" aria-hidden="true" style="font-size:150px; opacity:0.3;"></i>
+                </div>
+                <div class="card-body" style="position:relative">
+                    <div style="z-index:99;">
+                        <h4 class="card-title">Serendipity </h4>
+                        <p id="serendipity" style="font-size:4rem">84 bpm</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,9 +80,14 @@
         </div>
     </div>
 
+    <div class="collapse mb-3" id="collapseExample">
+        <div class="chart-container">
+            <canvas id="myChart" style="width:100vh; height:50vh;"></canvas>
+        </div>
+    </div>
     <div class="card-deck">
 
-        <div id="allarmCard" class="card text-white danger" style="position:relative; background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(75,134,179,1) 100%); border-style: none;box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
+        <div id="allarmCard" class="card text-white cardNormal" style="position:relative; border-radius: 20px; border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1);">
 
             <div style="top:15%; left:50%; position:absolute; opacity:0.3;">
                 <img src="~/Resource/Warning.png" style="width:150px; height:150px;" />
@@ -86,7 +96,7 @@
             <div class="card-body" style="position:relative">
                 <div style="z-index:99;">
                     <h4 class="card-title">Allarms</h4>
-                    <p id="allarms" style="font-size:40px; color:rgb(240, 119, 110);">Fallen detected</p>
+                    <p id="allarms" style="font-size:40px; color:#e2412c;"></p>
                 </div>
             </div>
         </div>
@@ -94,9 +104,9 @@
         <div id="batteryCard" class="card text-white" style="position:relative; background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
 
             <div style="top:15%; left:50%; position:absolute;">
-                <svg id="emptyBattery" class=""  xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.3" fill="currentColor" class="bi bi-battery" viewBox="0 0 16 16"> <path d="M0 6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6zm2-1a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H2zm14 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="white"></path> </svg>
-                <svg id="halfBattery" class="" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.3" fill="currentColor" class="bi bi-battery-half" viewBox="0 0 16 16"> <path d="M2 6h5v4H2V6z" fill="white"></path> <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2zm10 1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h10zm4 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="white"></path> </svg>
-                <svg id="fullBattery" class="" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.3" fill="currentColor" class="bi bi-battery-full" viewBox="0 0 16 16"> <path d="M2 6h10v4H2V6z" fill="white"></path> <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2zm10 1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h10zm4 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="white"></path> </svg>
+                <svg id="emptyBattery" style="color: #f3da35;" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.5" fill="currentColor" class="bi bi-battery" viewBox="0 0 16 16"> <path d="M0 6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6zm2-1a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H2zm14 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="red"></path> </svg>
+                <svg id="halfBattery" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.3" fill="currentColor" class="bi bi-battery-half" viewBox="0 0 16 16"> <path d="M2 6h5v4H2V6z" fill="white"></path> <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2zm10 1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h10zm4 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="white"></path> </svg>
+                <svg id="fullBattery" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill-opacity="0.3" fill="currentColor" class="bi bi-battery-full" viewBox="0 0 16 16"> <path d="M2 6h10v4H2V6z" fill="white"></path> <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2zm10 1a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h10zm4 3a1.5 1.5 0 0 1-1.5 1.5v-3A1.5 1.5 0 0 1 16 8z" fill="white"></path> </svg>
             </div>
             <div class="card-body" style="position:relative">
                 <div style="z-index:99;">
@@ -140,6 +150,9 @@
 </div>
 
 
-<div class="chart-container">
-    <canvas id="myChart" style="width:100vh; height:50vh;"></canvas>
-</div>
+
+
+
+
+
+

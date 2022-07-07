@@ -89,6 +89,13 @@ body {
     animation: pulseDanger 1s infinite;
 }
 
+.warning {
+    background: linear-gradient(90deg, rgba(255,234,168,1) 0%, rgba(255,224,129,1) 39%, rgba(255,211,77,1) 100%);
+}
+.cardNormal {
+    background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(75,134,179,1) 100%);
+}
+
 
 
 @-webkit-keyframes pulseDanger {
