@@ -55,9 +55,9 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
         public class InputModel
         {
 
-            [Required]
-            [Display(Name = "Username")]
-            public string UserName { get; set; }
+            //[Required]
+            //[Display(Name = "Username")]
+            public string Username { get; set; }
 
             [Required]
             [Display(Name = "Name")]
@@ -91,6 +91,9 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
+            public Guid BraceletId { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -103,24 +106,27 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Emergency Email2")]
             public string EmergencyEmail2 { get; set; } = "email@mail.com";
+            public string Role { get; set; } = "user";
         }
 
-        public List<Bracelet> bracelets  { get; set; }
+        public IEnumerable<Bracelet> bracelets  { get; set; }
 
         public async Task OnGet(string? returnUrl = null)
         {
-            bracelets = await _braceletService.GetBracelets();
-            ReturnUrl = returnUrl;
+            bracelets = await _braceletService.GetUnlinkedBracelets();
+            //ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(Bracelet bracelet, string? returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            await _braceletService.AssociateBracialetToUser(bracelet);
+            bracelets = await _braceletService.GetUnlinkedBracelets();
 
+
+            
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = _pool.GetUser(Input.UserName);
+                var user = _pool.GetUser(Input.Username);
                 user.Attributes.Add(CognitoAttribute.Email.AttributeName, Input.Email);
                 user.Attributes.Add(CognitoAttribute.Name.AttributeName, Input.Name);
                 user.Attributes.Add(CognitoAttribute.MiddleName.AttributeName, Input.LastName);
@@ -135,6 +141,12 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    var bracelet = bracelets.Where(x => x.SerialNumber == Input.BraceletId).FirstOrDefault();
+                    //var userBracelet = new Bracelet { SerialNumber = Input.BraceletId, Username = Input.Email, Color = bracelet.Color};
+                    bracelet.Username = Input.Email;
+                    var userToRegister = new User { Username =  Input.Email, Role = Input.Role};
+                    await _braceletService.AssociateBracialetToUser(bracelet, userToRegister);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
@@ -146,9 +158,14 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
+            else
+            {
+                var errors = ModelState.Select(x => x.Value.Errors)
+                       .Where(y => y.Count > 0)
+                       .ToList();
+            }
             // If we got this far, something failed, redisplay form
-            return Page();
+            return RedirectToPage("/Account/Register");
         }
     }
 }

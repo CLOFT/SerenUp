@@ -6,7 +6,7 @@
 }
 
 
-<div class="d-flex row" style="background: linear-gradient(90deg, rgba(255,255,255,1) 32%, rgba(68,180,125,1) 100%, rgba(255,189,140,1) 100%);">
+<div class="height d-flex justify-content-between align-items-center" style="background: linear-gradient(90deg, rgba(255,255,255,1) 32%, rgba(68,180,125,1) 100%, rgba(255,189,140,1) 100%);">
     <div class="col-md-4">
         <section>
             <form method="post">
@@ -35,7 +35,7 @@
                     <button type="submit" class="btn btn-primary" style="background-color:#44b47d; border-color:#44b47d;">Log in</button>
                 </div>
                 <div class="form-group mb-3">
-                    <p >
+                    <p>
                         <a asp-page="./ForgotPassword" style="color:#44b47d;">Forgot your password?</a>
                     </p>
                     <p>
@@ -46,9 +46,7 @@
         </section>
     </div>
     <div class="col-md-4">
-        <div style="width: 100vh; text-align: end;">
-            <img src="~/Resource/login.png"></img>
-        </div>
+        <img src="~/Resource/login.png" />
     </div>
 </div>
 

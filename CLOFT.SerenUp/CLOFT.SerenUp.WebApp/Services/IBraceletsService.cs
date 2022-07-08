@@ -3,8 +3,11 @@ namespace CLOFT.SerenUp.WebApp.Services
 {
     public interface IBraceletsService
     {
-        Task<List<Bracelet>> GetBracelets();
+        Task<IEnumerable<Bracelet>> GetUnlinkedBracelets();
 
-        Task AssociateBracialetToUser(Bracelet bracelet);
+        Task AssociateBracialetToUser(Bracelet bracelet, User username);
+
+        Task<HttpResponseMessage> InsertUser(User user);
+        Task<Bracelet> GetUserIdBracelet(string username);
     }
 }

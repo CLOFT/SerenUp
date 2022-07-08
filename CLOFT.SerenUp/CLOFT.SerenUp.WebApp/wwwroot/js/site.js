@@ -1,7 +1,9 @@
-﻿setInterval(UpdateHour, 1000);
-setInterval(UpdateDash, 2000);
-setInterval(UpdateChart, 2000);
+﻿setInterval(UpdateHour, '1.1574e-8');
+//setInterval(UpdateAxion, 2000);
+setInterval(UpdateDash, 5000);
+//setInterval(UpdateChart, 2000);
 //setInterval(UpdateDashFake, 3000);
+
 var values = [];
 const months = [
     'January',
@@ -113,11 +115,48 @@ function UpdateDashFake() {
     //document.getElementById("allarms").innerHTML = "Fallen detected";
 }
 
-function UpdateDash() {
-    const xhr = new XMLHttpRequest()
 
-    xhr.open("GET", "https://clofttestapi.azurewebsites.net/CloftData")
-    //send the Http request
+function UpdateAxion() {
+    var id = document.getElementById("userBracelet").innerHTML;
+    console.log(id);
+    var url = `https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/BraceletsData/${id}`;
+
+
+    //const url = "http://localhost:8000/api/" + version + "/messages";
+    var headers = {}
+
+    fetch(url, {
+        method: "GET",
+        mode: 'cors',
+        headers: headers
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.error)
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message)
+            //document.getElementById('messages').value = data.messages;
+        })
+        .catch(function (error) {
+            console.log(data.message)
+            //document.getElementById('messages').value = error;
+        });
+
+}
+function UpdateDash() {
+    const xhr = new XMLHttpRequest({ mozSystem: true })
+    //xhr.open("GET", "https://clofttestapi.azurewebsites.net/CloftData/")
+
+
+    var id = document.getElementById("userBracelet").innerHTML;
+
+    var url = `https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/BraceletsData/${id}`;
+
+    xhr.open("GET", url);
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhr.send()
 
     //triggered when the response is completed
@@ -125,7 +164,7 @@ function UpdateDash() {
         if (xhr.status === 200) {
             //parse JSON datax`x
             mesure = JSON.parse(xhr.responseText)
-
+            console.log(mesure);
             document.getElementById("serendipity").innerHTML = mesure.serendipity + " %";
             document.getElementById("heartRate").innerHTML = mesure.heartbeat + " bpm";
             document.getElementById("steps").innerHTML = mesure.steps;
@@ -240,5 +279,4 @@ function UpdateChart() {
         }
     }
 }
-
 

@@ -17,9 +17,9 @@
 
 </head>
 <body>
-    <div id="wrapper" style="font-family:'Roboto', sans-serif; font-weight:500;">
+    <div class="d-flex " style="font-family:'Roboto', sans-serif; font-weight:500; height:100vh;">
         <!-- Sidebar-->
-        <div id="sidebar-wrapper" class="d-flex flex-column flex-shrink-0 bg-light ml-4 shadow bg-white rounded h-100 d-inline-block" style="width: 4.5rem; position: fixed;">
+        <div id="sidebar-wrapper" class="d-flex flex-column flex-shrink-0 bg-light ml-4 shadow bg-white rounded ">
 
             <ul class="sidebar-nav nav flex-column mb-auto text-center" style="margin-top:2.5rem">
                 <li class="mb-5">
@@ -58,7 +58,7 @@
             </ul>
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none " id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="./Resource/Logout.png" alt="mdo" width="40" height="40" class="rounded-circle">
+                    <img src="~/Resource/Logout.png" alt="" width="40" height="40" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
                     <li><a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
@@ -73,12 +73,12 @@
 
         </div>
         <!-- Page content wrapper-->
-        <div class="" style="margin-left: 10%;" id="page-content-wrapper">
+        <div id="page-content-wrapper" class="container-fluid me-0 pe-0">
 
             <!-- Page content-->
             @*<div class="container-fluid">
                 </div>*@
-            <main role="main">
+            <main role="main" class="container-fluid me-0 pe-0" style="height:100%;">
                 @RenderBody()
             </main>
         </div>
