@@ -1,6 +1,6 @@
 ﻿setInterval(UpdateHour, '1.1574e-8');
 //setInterval(UpdateAxion, 2000);
-setInterval(UpdateDash, 5000);
+setInterval(UpdateDash, 2000);
 //setInterval(UpdateChart, 2000);
 //setInterval(UpdateDashFake, 3000);
 
@@ -147,16 +147,14 @@ function UpdateAxion() {
 
 }
 function UpdateDash() {
-    const xhr = new XMLHttpRequest({ mozSystem: true })
+    const xhr = new XMLHttpRequest()
     //xhr.open("GET", "https://clofttestapi.azurewebsites.net/CloftData/")
 
 
     var id = document.getElementById("userBracelet").innerHTML;
-
     var url = `https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/BraceletsData/${id}`;
-
     xhr.open("GET", url);
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+
     xhr.send()
 
     //triggered when the response is completed
@@ -164,54 +162,61 @@ function UpdateDash() {
         if (xhr.status === 200) {
             //parse JSON datax`x
             mesure = JSON.parse(xhr.responseText)
-            console.log(mesure);
-            document.getElementById("serendipity").innerHTML = mesure.serendipity + " %";
-            document.getElementById("heartRate").innerHTML = mesure.heartbeat + " bpm";
-            document.getElementById("steps").innerHTML = mesure.steps;
-            document.getElementById("bloodSat").innerHTML = mesure.bloodSaturation;
-            document.getElementById("systolicPress").innerHTML = mesure.systolicPressure;
-            document.getElementById("dyastolicPress").innerHTML = mesure.dyastolicPressure + " mmHg";
-            document.getElementById("batteryValue").innerHTML = mesure.battery + " %";
+            console.log(mesure[0]);
+            document.getElementById("serendipity").innerHTML = "83 %";
+            document.getElementById("heartRate").innerHTML = mesure[0].heartBeat + " bpm";
+            document.getElementById("steps").innerHTML = mesure[0].steps;
+            document.getElementById("bloodSat").innerHTML = mesure[0].oxygenSaturation + " %";
+            document.getElementById("systolicPress").innerHTML = mesure[0].bloodPressure.systolicPressure;
+            document.getElementById("dyastolicPress").innerHTML = mesure[0].bloodPressure.diastolicPressure + " mmHg";
+            document.getElementById("batteryValue").innerHTML = mesure[0].battery + " %";
             var battery = mesure.battery;
 
             // if fall logic
-            let fall = mesure.alarmFall;
-            if (fall === true) {
-                document.getElementById("allarms").innerHTML = "Fallen detected";
-                document.getElementById("allarmCard").classList.add('warning');
-                document.getElementById("allarmCard").classList.add('danger');
-                document.getElementById("allarmCard").classList.remove('cardNormal');
+            let allarm = mesure[0].alarm;
 
-            } else {
-                document.getElementById("allarms").innerHTML = "";
-                document.getElementById("allarmCard").classList.remove('warning');
-                document.getElementById("allarmCard").classList.remove('danger');
-                document.getElementById("allarmCard").classList.add('cardNormal');
+            if (allarm != null) {
+                if (alarm == "Fall") {
+                    document.getElementById("allarms").innerHTML = "Fallen detected";
+                    document.getElementById("allarms").style.color = "red";
+                    document.getElementById("allarmIcon").style.color = "rgb(224,123,130)";
+                    document.getElementById("allarmCard").classList.add('warning');
+                    document.getElementById("allarmCard").classList.add('danger');
+                    document.getElementById("allarmCard").classList.remove('cardNormal');
+                    document.getElementById("fallenAllert").classList.remove('d-none');
+                } else {
+                    document.getElementById("allarms").innerHTML = " - ";
+                    document.getElementById("allarms").style.color = "white";
+                    document.getElementById("allarmIcon").style.color = "white";
+                    document.getElementById("allarmCard").classList.remove('warning');
+                    document.getElementById("allarmCard").classList.remove('danger');
+                    document.getElementById("allarmCard").classList.add('cardNormal');
+                    document.getElementById("fallenAllert").classList.add('d-none');
+                }
             }
-
             // battery logic
             if (battery < 20) {
-                document.getElementById("emptyBattery").classList.remove('d-none');
-                document.getElementById("fullBattery").classList.add('d-none');
-                document.getElementById("halfBattery").classList.add('d-none');
+                document.getElementById("batteryIcon").classList.remove('bi-battery-full');
+                document.getElementById("batteryIcon").classList.remove('bi-battery-half');
+                document.getElementById("batteryIcon").classList.add('bi-battery');
 
-                document.getElementById("batteryValue").style.color = "rgb(224,123,130)";
+                document.getElementById("batteryIcon").style.color = "rgb(224,123,130)";
                 document.getElementById("batteryCard").classList.add('danger');
                 document.getElementById("allertDiv").classList.remove('d-none');
             } else if (battery >= 20 && battery < 65) {
-                document.getElementById("emptyBattery").classList.add('d-none');
-                document.getElementById("fullBattery").classList.add('d-none');
-                document.getElementById("halfBattery").classList.remove('d-none');
+                document.getElementById("batteryIcon").classList.add('bi-battery-half');
+                document.getElementById("batteryIcon").classList.remove('bi-battery');
+                document.getElementById("batteryIcon").classList.remove('bi-battery-full');
 
-                document.getElementById("batteryValue").style.color = "white";
+                document.getElementById("batteryIcon").style.color = "white";
                 document.getElementById("batteryCard").classList.remove('danger');
                 document.getElementById("allertDiv").classList.add('d-none');
             } else if (battery >= 65) {
-                document.getElementById("emptyBattery").classList.add('d-none');
-                document.getElementById("fullBattery").classList.remove('d-none');
-                document.getElementById("halfBattery").classList.add('d-none');
+                document.getElementById("batteryIcon").classList.remove('bi-battery-half');
+                document.getElementById("batteryIcon").classList.remove('bi-battery');
+                document.getElementById("batteryIcon").classList.add('bi-battery-full');
 
-                document.getElementById("batteryValue").style.color = "white";
+                document.getElementById("batteryIcon").style.color = "white";
                 document.getElementById("batteryCard").classList.remove('danger');
                 document.getElementById("allertDiv").classList.add('d-none');
             }
