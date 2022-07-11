@@ -4,8 +4,8 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+using Amazon.AspNetCore.Identity.Cognito;
+using Amazon.Extensions.CognitoAuthentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,22 +14,23 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<CognitoUser> _signInManager;
+        private readonly CognitoUserManager<CognitoUser> _userManager;
 
-        public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        public IndexModel(SignInManager<CognitoUser> signInManager, UserManager<CognitoUser> userManager)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
+            _userManager = userManager as CognitoUserManager<CognitoUser>;
         }
-
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
+        public string FamilyName { get; set; }
+        public string Name { get; set; }
+        public string BirthDate { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -60,13 +61,15 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(CognitoUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
+            var keyValuePair2 = user.Attributes.AsEnumerable().ToList();
+       
             Username = userName;
-
+            
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber

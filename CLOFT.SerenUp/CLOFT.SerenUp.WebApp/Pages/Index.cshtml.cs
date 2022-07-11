@@ -2,6 +2,7 @@
 {
     using Amazon.Extensions.CognitoAuthentication;
     using CLOFT.SerenUp.WebApp.Services;
+    using CLOFT.SerenUp.WebApp.Services.Models;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using System.ComponentModel.DataAnnotations;
@@ -31,7 +32,9 @@
             {
                 return Redirect("/Identity/Account/Login");
             }
-            var email = User.Claims.ToList()[9];
+            var email = User.Claims.ToList()[7];
+            var role = User.HasClaim(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" && c.Value == "admin");
+
             UserBracelet = await _braceletService.GetUserIdBracelet(email.Value.ToString());
             return Page();
 

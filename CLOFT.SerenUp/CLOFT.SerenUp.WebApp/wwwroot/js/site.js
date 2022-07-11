@@ -1,8 +1,6 @@
 ﻿setInterval(UpdateHour, '1.1574e-8');
-//setInterval(UpdateAxion, 2000);
 setInterval(UpdateDash, 2000);
 //setInterval(UpdateChart, 2000);
-//setInterval(UpdateDashFake, 3000);
 
 var values = [];
 const months = [
@@ -111,45 +109,10 @@ function UpdateDashFake() {
         document.getElementById("batteryCard").classList.remove('danger');
         document.getElementById("allertDiv").classList.add('d-none');
     }
-
-    //document.getElementById("allarms").innerHTML = "Fallen detected";
 }
 
-
-function UpdateAxion() {
-    var id = document.getElementById("userBracelet").innerHTML;
-    console.log(id);
-    var url = `https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/BraceletsData/${id}`;
-
-
-    //const url = "http://localhost:8000/api/" + version + "/messages";
-    var headers = {}
-
-    fetch(url, {
-        method: "GET",
-        mode: 'cors',
-        headers: headers
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(response.error)
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data.message)
-            //document.getElementById('messages').value = data.messages;
-        })
-        .catch(function (error) {
-            console.log(data.message)
-            //document.getElementById('messages').value = error;
-        });
-
-}
 function UpdateDash() {
     const xhr = new XMLHttpRequest()
-    //xhr.open("GET", "https://clofttestapi.azurewebsites.net/CloftData/")
-
 
     var id = document.getElementById("userBracelet").innerHTML;
     var url = `https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/BraceletsData/${id}`;

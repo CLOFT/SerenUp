@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CLOFT.SerenUp.WebApp.Services.Models;
+using Newtonsoft.Json;
 using System.Text;
 
 namespace CLOFT.SerenUp.WebApp.Services
@@ -50,6 +51,14 @@ namespace CLOFT.SerenUp.WebApp.Services
             var responseBody = await client.GetStringAsync(url);
             var idBracelet = JsonConvert.DeserializeObject<Bracelet>(responseBody);
             return idBracelet;
+        }
+
+        public async Task<HttpResponseMessage> InsertUserSecureContact(UserSecureContact userSC)
+        {
+
+            var response = await client.PostAsJsonAsync("https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/UsersSecureContacts", userSC);
+
+            return response;
         }
     }
 }

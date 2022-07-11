@@ -1,4 +1,6 @@
 ﻿
+using CLOFT.SerenUp.WebApp.Services.Models;
+
 namespace CLOFT.SerenUp.WebApp.Services
 {
     public interface IBraceletsService
@@ -9,5 +11,6 @@ namespace CLOFT.SerenUp.WebApp.Services
 
         Task<HttpResponseMessage> InsertUser(User user);
         Task<Bracelet> GetUserIdBracelet(string username);
+        Task<HttpResponseMessage> InsertUserSecureContact(UserSecureContact userSC);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace CLOFT.SerenUp.WebApp.Services
+﻿namespace CLOFT.SerenUp.WebApp.Services.Models
 {
     public class Bracelet
     {
@@ -6,6 +6,6 @@
         public string Username { get; set; }
         public string? Color { get; set; }
 
-    
+
     }
 }

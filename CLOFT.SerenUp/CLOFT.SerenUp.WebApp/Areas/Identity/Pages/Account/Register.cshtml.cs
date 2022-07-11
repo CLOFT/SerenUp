@@ -2,25 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
 using Amazon.AspNetCore.Identity.Cognito;
 using Amazon.Extensions.CognitoAuthentication;
 using CLOFT.SerenUp.WebApp.Services;
-using Microsoft.AspNetCore.Authentication;
+using CLOFT.SerenUp.WebApp.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 
 namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
 {
@@ -71,9 +61,6 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
             [Phone]
             public string PhoneNumber { get; set; } = string.Empty;
 
-            //[Display(Name = "Picture")]
-            //public int Picture { get; set; }
-
             [Required]
             [Display(Name = "Birth date")]
             [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -103,9 +90,6 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
             [Display(Name = "Emergency Email")]
             public string EmergencyEmail1 { get; set; }
 
-            [EmailAddress]
-            [Display(Name = "Emergency Email2")]
-            public string EmergencyEmail2 { get; set; } = "email@mail.com";
             public string Role { get; set; } = "user";
         }
 
@@ -129,22 +113,20 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                 var user = _pool.GetUser(Input.Username);
                 user.Attributes.Add(CognitoAttribute.Email.AttributeName, Input.Email);
                 user.Attributes.Add(CognitoAttribute.Name.AttributeName, Input.Name);
-                user.Attributes.Add(CognitoAttribute.MiddleName.AttributeName, Input.LastName);
+                user.Attributes.Add(CognitoAttribute.FamilyName.AttributeName, Input.LastName);
                 user.Attributes.Add(CognitoAttribute.PhoneNumber.AttributeName, Input.PhoneNumber);
                 user.Attributes.Add(CognitoAttribute.BirthDate.AttributeName, Input.BirthDate.ToString("d"));
-                user.Attributes.Add(CognitoAttribute.Picture.AttributeName, "");
-                user.Attributes.Add("custom:emergencyContact1", Input.EmergencyEmail1);
-                user.Attributes.Add("custom:emergencyContact2", Input.EmergencyEmail2);
-
                 
-
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
+                var role = await _userManager.AddToRoleAsync(user, Input.Role);
+
                 if (result.Succeeded)
                 {
+                    await _braceletService.InsertUserSecureContact(new UserSecureContact { Username = Input.Email, ContactEmail = Input.EmergencyEmail1 });
                     var bracelet = bracelets.Where(x => x.SerialNumber == Input.BraceletId).FirstOrDefault();
-                    //var userBracelet = new Bracelet { SerialNumber = Input.BraceletId, Username = Input.Email, Color = bracelet.Color};
                     bracelet.Username = Input.Email;
-                    var userToRegister = new User { Username =  Input.Email, Role = Input.Role};
+                    var userToRegister = new User { Username =  Input.Email, Role = Input.Role, Birth = Input.BirthDate};
                     await _braceletService.AssociateBracialetToUser(bracelet, userToRegister);
 
                     _logger.LogInformation("User created a new account with password.");
