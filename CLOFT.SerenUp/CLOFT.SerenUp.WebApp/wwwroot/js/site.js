@@ -125,21 +125,24 @@ function UpdateDash() {
         if (xhr.status === 200) {
             //parse JSON datax`x
             mesure = JSON.parse(xhr.responseText)
+            pos = mesure[0].position;
+            positions = pos.split(",");
             console.log(mesure[0]);
-            document.getElementById("serendipity").innerHTML = "83 %";
+            document.getElementById("latitude").innerHTML = positions[0];
+            document.getElementById("longitude").innerHTML = positions[1];
             document.getElementById("heartRate").innerHTML = mesure[0].heartBeat + " bpm";
             document.getElementById("steps").innerHTML = mesure[0].steps;
             document.getElementById("bloodSat").innerHTML = mesure[0].oxygenSaturation + " %";
             document.getElementById("systolicPress").innerHTML = mesure[0].bloodPressure.systolicPressure;
             document.getElementById("dyastolicPress").innerHTML = mesure[0].bloodPressure.diastolicPressure + " mmHg";
             document.getElementById("batteryValue").innerHTML = mesure[0].battery + " %";
-            var battery = mesure.battery;
+            battery = mesure[0].battery;
 
             // if fall logic
             let allarm = mesure[0].alarm;
 
             if (allarm != null) {
-                if (alarm == "Fall") {
+                if (allarm === "FALL") {
                     document.getElementById("allarms").innerHTML = "Fallen detected";
                     document.getElementById("allarms").style.color = "red";
                     document.getElementById("allarmIcon").style.color = "rgb(224,123,130)";

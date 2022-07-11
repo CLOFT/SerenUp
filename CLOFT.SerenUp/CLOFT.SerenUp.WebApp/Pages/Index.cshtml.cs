@@ -23,7 +23,8 @@
 
         [BindProperty]
         public Bracelet UserBracelet { get; set; }
-
+        [BindProperty]
+        public bool Admin { get; set; }
 
 
         public async Task<IActionResult> OnGet()
@@ -33,7 +34,7 @@
                 return Redirect("/Identity/Account/Login");
             }
             var email = User.Claims.ToList()[7];
-            var role = User.HasClaim(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" && c.Value == "admin");
+            Admin = User.HasClaim(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" && c.Value == "admin");
 
             UserBracelet = await _braceletService.GetUserIdBracelet(email.Value.ToString());
             return Page();

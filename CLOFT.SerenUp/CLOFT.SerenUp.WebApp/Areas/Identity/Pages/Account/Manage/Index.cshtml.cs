@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Amazon.AspNetCore.Identity.Cognito;
 using Amazon.Extensions.CognitoAuthentication;
 using Microsoft.AspNetCore.Identity;
@@ -66,8 +67,11 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            var keyValuePair2 = user.Attributes.AsEnumerable().ToList();
-       
+            var attribute = user.Attributes;
+            BirthDate = attribute["birthdate"].ToString();
+            FamilyName = attribute["family_name"].ToString();
+            Name = attribute["name"].ToString();
+            Email = attribute["email"].ToString();
             Username = userName;
             
             Input = new InputModel

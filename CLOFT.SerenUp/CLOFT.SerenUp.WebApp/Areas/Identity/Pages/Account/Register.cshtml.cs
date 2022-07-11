@@ -41,12 +41,13 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
+        public List<string> usernames { get; set; }
 
         public class InputModel
         {
 
-            //[Required]
-            //[Display(Name = "Username")]
+            [Required]
+            [Display(Name = "Username")]
             public string Username { get; set; }
 
             [Required]
@@ -98,6 +99,8 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
         public async Task OnGet(string? returnUrl = null)
         {
             bracelets = await _braceletService.GetUnlinkedBracelets();
+            var users = await _userManager.GetUsersAsync();
+            usernames = users.Select(x => x.Username).ToList();
             //ReturnUrl = returnUrl;
         }
 
@@ -118,9 +121,9 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                 user.Attributes.Add(CognitoAttribute.BirthDate.AttributeName, Input.BirthDate.ToString("d"));
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                
-                var role = await _userManager.AddToRoleAsync(user, Input.Role);
-
+                _logger.LogInformation("ciao " + user.Username);
+                await _userManager.AddToRoleAsync(user, Input.Role);
+                await _userManager.AdminConfirmSignUpAsync(user);
                 if (result.Succeeded)
                 {
                     await _braceletService.InsertUserSecureContact(new UserSecureContact { Username = Input.Email, ContactEmail = Input.EmergencyEmail1 });
