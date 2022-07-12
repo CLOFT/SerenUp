@@ -3,11 +3,7 @@ html {
   font-family: 'Roboto';
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
+
 
 html {
   position: relative;
@@ -129,8 +125,12 @@ html {
     }
 }
 
-.batteryIcon{
-    
+.flexcard{
+    width:23%;
+    margin: 10px;
+}
+.cards {
+    margin-top: 28px;
 }
 
 .chart-container {
@@ -139,4 +139,43 @@ html {
     margin-right: auto;
     height: 40vh;
     width: 80vw;
+}
+@media (max-width: 1270px) {
+    .flexcard {
+        width: 30%;
+        margin: 10px;
+    }
+        
+}
+
+@media (max-width: 1278px) {
+    .flexcard {
+        width: 48%;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 1254px) {
+    .flexcard {
+        width: 47%;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 795px) {
+    .flexcard {
+        width: 46%;
+        margin: 10px;
+    }
+
+    .cards {
+        margin-top: 28px;
+    }
+}
+
+@media (max-width: 700px) {
+    .flexcard {
+        width: 100%;
+        margin: 10px;
+    }
 }

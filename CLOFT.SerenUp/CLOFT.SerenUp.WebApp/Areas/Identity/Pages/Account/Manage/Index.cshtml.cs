@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Amazon.AspNetCore.Identity.Cognito;
 using Amazon.Extensions.CognitoAuthentication;
+using CLOFT.SerenUp.WebApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,11 +18,12 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account.Manage
     {
         private readonly SignInManager<CognitoUser> _signInManager;
         private readonly CognitoUserManager<CognitoUser> _userManager;
-
-        public IndexModel(SignInManager<CognitoUser> signInManager, UserManager<CognitoUser> userManager)
+        private readonly IBraceletsService _braceletsService;
+        public IndexModel(SignInManager<CognitoUser> signInManager, UserManager<CognitoUser> userManager, IBraceletsService braceletsService)
         {
             _signInManager = signInManager;
             _userManager = userManager as CognitoUserManager<CognitoUser>;
+            _braceletsService = braceletsService;
         }
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -32,6 +34,7 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account.Manage
         public string Name { get; set; }
         public string BirthDate { get; set; }
         public string Email { get; set; }
+        public string BraceletID { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -62,18 +65,20 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(CognitoUser user)
+        private async Task LoadAsync(CognitoUser cognitoUser)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            var attribute = user.Attributes;
-            BirthDate = attribute["birthdate"].ToString();
+            var userName = await _userManager.GetUserNameAsync(cognitoUser);
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(cognitoUser);
+            var attribute = cognitoUser.Attributes;
+            
             FamilyName = attribute["family_name"].ToString();
+            BirthDate = attribute["birthdate"].ToString();
             Name = attribute["name"].ToString();
             Email = attribute["email"].ToString();
             Username = userName;
-            
+            var user = await _braceletsService.GetUserIdBracelet(Email);
+            BraceletID = user.SerialNumber.ToString();
+
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber

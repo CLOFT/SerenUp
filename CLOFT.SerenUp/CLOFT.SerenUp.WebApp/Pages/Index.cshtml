@@ -5,7 +5,7 @@
     ViewData["Page"] = "home";
 }
 
-<div>
+<div style="margin-right:3%;">
     <div class="d-flex justify-content-between pt-5">
         <h1 class="mb-3">
             <span style="color:gray">Welcome </span>@Model.User.Identity.Name
@@ -16,12 +16,11 @@
             }
         </h1>
         <span id="userBracelet" class="d-none">@Model.UserBracelet.SerialNumber</span>
-        <div class="mr-5">
+        <div>
             <p style="color:red;"> <span id="dayOfWeek"></span> <span id="week"></span> </p>
             <h3 id="clock"> <span id="day"></span> <span id="mounth"></span> <span id="year"></span> </h3>
         </div>
     </div>
-
 
     <div style="width: 100%; height:100px;">
         <div id="allertDiv" class="d-none alert alert-warning alert-dismissible fade show text-center" role="alert">
@@ -32,14 +31,11 @@
         </div>
     </div>
 
-    <div class="d-flex align-content-between flex-wrap mb-5">
-
-
-        <div class="card text-white me-4 my-4" style="width:370px; background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(75,134,179,1) 100%); border-style: none;box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
-
+    <div class="d-flex flex-wrap justify-content-between cards">
+        <div class="card text-white  flexcard " style="background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(75,134,179,1) 100%); border-style: none;box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
             <div type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                <div style="top:13%; left:50%; position:absolute;">
-                    <i class="fa fa-spinner fa-spin" aria-hidden="true" style="font-size:150px; opacity:0.3;"></i>
+                <div style="top:10%; left:50%; position:absolute; ">
+                    <i class="fa fa-spinner fa-spin" aria-hidden="true" style="font-size:1000%; opacity:0.3;"></i>
                 </div>
                 <div class="card-body">
                     <div style="z-index:99;">
@@ -49,10 +45,10 @@
                 </div>
             </div>
         </div>
-        <div class="card text-white me-4 my-4" style="width:370px; background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
 
-            <div style="top:15%; left:50%; position:absolute;" class="heart">
-                <svg style="" xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" fill-opacity="0.3" class="bi bi-heart-pulse" viewBox="0 0 16 16">
+        <div class="card text-white   flexcard" style="background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
+            <div style="top:11%; left:50%; position:absolute;" class="heart">
+                <svg style="" xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" fill-opacity="0.3" class="bi bi-heart-pulse" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01L8 2.748ZM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5Zm8.252-6.686a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162l-1.874-4.686Z" />
                 </svg>
             </div>
@@ -63,10 +59,10 @@
                 </div>
             </div>
         </div>
-        <div class="card text-white me-4 my-4" style="width:370px; background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(104,204,186,1) 100%); border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
 
-            <div style="top:15%; left:40%; position:absolute;">
-                <i class="fa-solid fa-shoe-prints" style="font-size:150px; opacity:0.3;"></i>
+        <div class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(104,204,186,1) 100%); border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
+            <div style="top:11%; left:40%; position:absolute;">
+                <i class="fa-solid fa-shoe-prints" style="font-size:140px; opacity:0.3;"></i>
             </div>
             <div class="card-body">
                 <div style="z-index:99;">
@@ -75,10 +71,10 @@
                 </div>
             </div>
         </div>
-        <div class="card text-white me-4 my-4" style="width:370px; background: linear-gradient(90deg, rgba(224,123,130,1) 0%, rgba(228,4,4,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(224,123,130,1); border-style:none; border-radius: 20px;">
 
-            <div style="top:15%; left:50%; position:absolute;">
-                <img src="~/Resource/OxygenBlood.png" style="width:150px; height:150px; opacity:0.4; " />
+        <div class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(224,123,130,1) 0%, rgba(228,4,4,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(224,123,130,1); border-style:none; border-radius: 20px;">
+            <div style="top:9%; left:50%; position:absolute;">
+                <img src="~/Resource/OxygenBlood.png" style="width:140px; height:140px; opacity:0.4; " />
             </div>
             <div class="card-body">
                 <div style="z-index:99;">
@@ -92,9 +88,9 @@
                 <canvas id="myChart" style="width:100vh; height:50vh;"></canvas>
             </div>
         </div>
-        <div id="allarmCard" class="card text-white me-4 my-4 cardNormal" style="width:370px;border-radius: 20px; border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1);">
 
-            <div style="top:-15%; left:50%; position:absolute; opacity:0.3;">
+        <div id="allarmCard" class="card text-white   flexcard cardNormal" style="border-radius: 20px; border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1);">
+            <div style="top:-25%; left:50%; position:absolute; opacity:0.3;">
                 <i id="allarmIcon" class="bi bi-exclamation-triangle" style="font-size:150px; position:absolute;"></i>
             </div>
             <div class="card-body">
@@ -105,9 +101,8 @@
             </div>
         </div>
 
-        <div id="batteryCard" class="card text-white me-4 my-4" style="width:370px; background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
-
-            <div style="left:40%; top: -25%; position:absolute;">
+        <div id="batteryCard" class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
+            <div style="left:40%; top: -40%; position:absolute;">
                 <i id="batteryIcon" class="bi bi-battery-half" style="font-size:180px; opacity:0.3; position:absolute;"></i>
             </div>
             <div class="card-body">
@@ -117,8 +112,9 @@
                 </div>
             </div>
         </div>
-        <div class="card text-white me-4 my-4" style="width:370px; background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(104,204,186,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
-            <div style="top:15%; left:50%; position:absolute;" class="d-flex justify-content-center">
+
+        <div class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(104,204,186,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
+            <div style="top:7%; left:53%; position:absolute;" class="d-flex justify-content-center">
                 <div style="position:absolute; top:29px;" class="pulsar align-self-center">
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" fill-opacity="0.3" class="bi bi-geo-alt" viewBox="0 0 16 16">
@@ -126,6 +122,7 @@
                     <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                 </svg>
             </div>
+
             <div class="card-body">
                 <div style="z-index:99;">
                     <h4 class="card-title">Position</h4>
@@ -135,10 +132,10 @@
                 </div>
             </div>
         </div>
-        <div class="card text-white me-4 my-4" style="width:370px; background: linear-gradient(90deg, rgba(224,123,130,1) 0%, rgba(228,4,4,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(224,123,130,1); border-radius: 20px;">
 
-            <div style=" left:40%; position:absolute;">
-                <img src="~/Resource/Pressure.png" style="width:190px; height:190px; opacity:0.3;" />
+        <div class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(224,123,130,1) 0%, rgba(228,4,4,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(224,123,130,1); border-radius: 20px;">
+            <div style=" left:43%; position:absolute;">
+                <img src="~/Resource/Pressure.png" style="width:170px; height:170px; opacity:0.3;" />
             </div>
             <div class="card-body">
                 <div style="z-index:99;">
@@ -151,4 +148,5 @@
         </div>
     </div>
 </div>
+
 <script src="~/js/site.js" asp-append-version="true"></script>
