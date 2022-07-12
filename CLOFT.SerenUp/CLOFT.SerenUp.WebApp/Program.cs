@@ -4,6 +4,7 @@ using CLOFT.SerenUp.WebApp.Data;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using CLOFT.SerenUp.WebApp.Services;
+using Amazon.S3;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ AWSOptions awsOptions = new AWSOptions
     Credentials = new BasicAWSCredentials(builder.Configuration.GetConnectionString("accessKey"), builder.Configuration.GetConnectionString("secretKey"))
 };
 builder.Services.AddDefaultAWSOptions(awsOptions);
+builder.Services.AddAWSService<IAmazonS3>(awsOptions);
 
 builder.Services.AddScoped<IBraceletsService, BraceletsService>();
 
