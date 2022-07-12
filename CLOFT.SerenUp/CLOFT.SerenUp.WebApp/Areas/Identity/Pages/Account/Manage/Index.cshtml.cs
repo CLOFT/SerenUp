@@ -8,6 +8,7 @@ using System.Linq;
 using Amazon.AspNetCore.Identity.Cognito;
 using Amazon.Extensions.CognitoAuthentication;
 using CLOFT.SerenUp.WebApp.Services;
+using CLOFT.SerenUp.WebApp.Services.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -76,8 +77,17 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account.Manage
             Name = attribute["name"].ToString();
             Email = attribute["email"].ToString();
             Username = userName;
-            var user = await _braceletsService.GetUserIdBracelet(Email);
-            BraceletID = user.SerialNumber.ToString();
+            
+            var userBracelet = await _braceletsService.GetUserIdBracelet(Email);
+            if(userBracelet == null)
+            {
+                BraceletID = "";
+            }
+            else
+            {
+                BraceletID = userBracelet.SerialNumber.ToString();
+            }
+
 
             Input = new InputModel
             {

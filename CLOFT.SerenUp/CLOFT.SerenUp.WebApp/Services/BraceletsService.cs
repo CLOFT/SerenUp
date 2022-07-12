@@ -8,7 +8,7 @@ namespace CLOFT.SerenUp.WebApp.Services
     {
         HttpClient client = new HttpClient();
 
-        public async Task AssociateBracialetToUser(Bracelet bracelet, User user)
+        public async Task<HttpResponseMessage> AssociateBracialetToUser(Bracelet bracelet, User user)
         {
             var res = await InsertUser(user);
             if (res.IsSuccessStatusCode)
@@ -19,10 +19,11 @@ namespace CLOFT.SerenUp.WebApp.Services
                 {
                     Console.WriteLine("Table user/bracialets not updated");
                 }
+                return response;
             }
             else
             {
-                Console.WriteLine("errore ");
+                return res;
             }
 
         }
@@ -49,6 +50,7 @@ namespace CLOFT.SerenUp.WebApp.Services
         {
             string url = $"https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/Bracelets/GetByUsername/{username}";
             var responseBody = await client.GetStringAsync(url);
+
             var idBracelet = JsonConvert.DeserializeObject<Bracelet>(responseBody);
             return idBracelet;
         }

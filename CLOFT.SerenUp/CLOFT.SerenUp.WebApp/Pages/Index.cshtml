@@ -9,13 +9,26 @@
     <div class="d-flex justify-content-between pt-5">
         <h1 class="mb-3">
             <span style="color:gray">Welcome </span>@Model.User.Identity.Name
-            @if (@Model.Admin == true)
+            @if (@Model.AdminRole == true)
             {
                 <br>
                 <p style="font-size:15px; color:red;">Administrator account</p>
             }
         </h1>
-        <span id="userBracelet" class="d-none">@Model.UserBracelet.SerialNumber</span>
+        @if (@Model.UserBracelet != null)
+        {
+            <span id="userBracelet" class="d-none">
+                @Model.UserBracelet.SerialNumber
+            </span>
+        }
+        else
+        {
+            <div style="width: 70%; height:100px;">
+                <div class="alert alert-danger fade show text-center" role="alert">
+                    <strong>WARNING!</strong> BRACELET NOT ASSIGNED
+                </div>
+            </div>
+        }
         <div>
             <p style="color:red;"> <span id="dayOfWeek"></span> <span id="week"></span> </p>
             <h3 id="clock"> <span id="day"></span> <span id="mounth"></span> <span id="year"></span> </h3>
@@ -40,7 +53,12 @@
                 <div class="card-body">
                     <div style="z-index:99;">
                         <h4 class="card-title">Serendipity </h4>
-                        <p id="serendipity" style="font-size:4rem">@Model.UserBracelet.Serendipity %</p>
+                        <p id="serendipity" style="font-size:4rem">
+                            @if(@Model.UserBracelet != null)
+                            {
+                                @Model.UserBracelet.Serendipity
+                            } %
+                        </p>
                     </div>
                 </div>
             </div>
@@ -55,7 +73,7 @@
             <div class="card-body">
                 <div style="z-index:99;">
                     <h4 class="card-title">Heart rate </h4>
-                    <p id="heartRate" style="font-size:4rem">84 bpm</p>
+                    <p id="heartRate" style="font-size:4rem">- bpm</p>
                 </div>
             </div>
         </div>
@@ -67,7 +85,7 @@
             <div class="card-body">
                 <div style="z-index:99;">
                     <h4 class="card-title">Steps </h4>
-                    <p id="steps" style="font-size:4rem">84</p>
+                    <p id="steps" style="font-size:4rem">-</p>
                 </div>
             </div>
         </div>
@@ -79,7 +97,7 @@
             <div class="card-body">
                 <div style="z-index:99;">
                     <h4 class="card-title">Blood saturation </h4>
-                    <p id="bloodSat" style="font-size:4rem">84</p>
+                    <p id="bloodSat" style="font-size:4rem">-</p>
                 </div>
             </div>
         </div>
@@ -96,7 +114,7 @@
             <div class="card-body">
                 <div style="z-index:99;">
                     <h4 class="card-title">Allarms</h4>
-                    <p id="allarms" style="font-size:40px;">-</p>
+                    <p id="allarms" style="font-size:40px;"></p>
                 </div>
             </div>
         </div>
@@ -108,7 +126,7 @@
             <div class="card-body">
                 <div style="z-index:99;">
                     <h4 class="card-title">Battery</h4>
-                    <p id="batteryValue" style="font-size:4rem">80</p>
+                    <p id="batteryValue" style="font-size:4rem">-</p>
                 </div>
             </div>
         </div>

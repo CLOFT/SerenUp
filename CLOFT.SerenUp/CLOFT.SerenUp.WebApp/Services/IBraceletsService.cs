@@ -7,7 +7,7 @@ namespace CLOFT.SerenUp.WebApp.Services
     {
         Task<IEnumerable<Bracelet>> GetUnlinkedBracelets();
 
-        Task AssociateBracialetToUser(Bracelet bracelet, User username);
+        Task<HttpResponseMessage> AssociateBracialetToUser(Bracelet bracelet, User username);
 
         Task<HttpResponseMessage> InsertUser(User user);
         Task<Bracelet> GetUserIdBracelet(string username);

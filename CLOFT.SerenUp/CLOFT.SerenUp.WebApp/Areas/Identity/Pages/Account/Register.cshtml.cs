@@ -96,11 +96,11 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
 
         public IEnumerable<Bracelet> bracelets  { get; set; }
 
-        public async Task OnGet(string? returnUrl = null)
+        public async Task OnGet()
         {
             bracelets = await _braceletService.GetUnlinkedBracelets();
-            var users = await _userManager.GetUsersAsync();
-            usernames = users.Select(x => x.Username).ToList();
+            //var users = await _userManager.GetUsersAsync();
+            //usernames = users.Select(x => x.Username).ToList();
             //ReturnUrl = returnUrl;
         }
 
@@ -121,18 +121,27 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                 user.Attributes.Add(CognitoAttribute.BirthDate.AttributeName, Input.BirthDate.ToString("d"));
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                _logger.LogInformation("ciao " + user.Username);
-                await _userManager.AddToRoleAsync(user, Input.Role);
-                await _userManager.AdminConfirmSignUpAsync(user);
+                Console.WriteLine($"create user: {result}");
+
+                var addRoleResp = await _userManager.AddToRoleAsync(user, Input.Role);
+                Console.WriteLine($"add role to user: {addRoleResp}");
+
+
+                var confirmUser = await _userManager.AdminConfirmSignUpAsync(user);
+                Console.WriteLine($"confirm user: {confirmUser}");
+
+
                 if (result.Succeeded)
                 {
-                    await _braceletService.InsertUserSecureContact(new UserSecureContact { Username = Input.Email, ContactEmail = Input.EmergencyEmail1 });
                     var bracelet = bracelets.Where(x => x.SerialNumber == Input.BraceletId).FirstOrDefault();
                     bracelet.Username = Input.Email;
                     var userToRegister = new User { Username =  Input.Email, Role = Input.Role, Birth = Input.BirthDate};
-                    await _braceletService.AssociateBracialetToUser(bracelet, userToRegister);
+                    var braceletToUserResp = await _braceletService.AssociateBracialetToUser(bracelet, userToRegister);
+                    Console.WriteLine($"bracelet associate with user: {braceletToUserResp.ReasonPhrase}");
+                    
+                    var resp = await _braceletService.InsertUserSecureContact(new UserSecureContact { Username = Input.Email, ContactEmail = Input.EmergencyEmail1 });
+                    Console.WriteLine($"insert secure contant: {resp.ReasonPhrase}");
 
-                    _logger.LogInformation("User created a new account with password.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -150,6 +159,7 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                        .ToList();
             }
             // If we got this far, something failed, redisplay form
+            Console.WriteLine("omething failed");
             return RedirectToPage("/Account/Register");
         }
     }
