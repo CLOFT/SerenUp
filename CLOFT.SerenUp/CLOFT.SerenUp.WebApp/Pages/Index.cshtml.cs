@@ -25,7 +25,8 @@
         public Bracelet UserBracelet { get; set; }
         [BindProperty]
         public bool AdminRole { get; set; }
-
+        [BindProperty]
+        public decimal Serendipity { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
@@ -37,7 +38,7 @@
             AdminRole = User.HasClaim(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" && c.Value == "admin");
 
             UserBracelet = await _braceletService.GetUserIdBracelet(email.Value.ToString());
-            
+            Serendipity = Math.Round((decimal)(UserBracelet.Serendipity * 100), 0, MidpointRounding.ToEven);
             return Page();
 
         }

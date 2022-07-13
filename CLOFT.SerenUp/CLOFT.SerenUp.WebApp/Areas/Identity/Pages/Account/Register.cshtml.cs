@@ -135,7 +135,7 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                 {
                     var bracelet = bracelets.Where(x => x.SerialNumber == Input.BraceletId).FirstOrDefault();
                     bracelet.Username = Input.Email;
-                    var userToRegister = new User { Username =  Input.Email, Role = Input.Role, Birth = Input.BirthDate.ToString("yyyy-MM-dd") };
+                    var userToRegister = new User { Username =  Input.Email, Role = Input.Role, Birth = Input.BirthDate};
                     var braceletToUserResp = await _braceletService.AssociateBracialetToUser(bracelet, userToRegister);
                     Console.WriteLine($"bracelet associate with user: {braceletToUserResp.ReasonPhrase}");
                     
