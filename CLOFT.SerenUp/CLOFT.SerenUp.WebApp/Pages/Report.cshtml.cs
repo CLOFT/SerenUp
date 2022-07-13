@@ -1,11 +1,13 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Transfer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CLOFT.SerenUp.WebApp.Pages
 {
+    [Authorize(Roles="admin")]
     public class ReportModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

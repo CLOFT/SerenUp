@@ -64,7 +64,7 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Birth date")]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+            [DataType(DataType.Date)]
             public DateTime BirthDate { get; set; }
 
             [Required]
@@ -118,7 +118,7 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                 user.Attributes.Add(CognitoAttribute.Name.AttributeName, Input.Name);
                 user.Attributes.Add(CognitoAttribute.FamilyName.AttributeName, Input.LastName);
                 user.Attributes.Add(CognitoAttribute.PhoneNumber.AttributeName, Input.PhoneNumber);
-                user.Attributes.Add(CognitoAttribute.BirthDate.AttributeName, Input.BirthDate.ToString("d"));
+                user.Attributes.Add(CognitoAttribute.BirthDate.AttributeName, Input.BirthDate.ToString("yyyy-MM-dd"));
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 Console.WriteLine($"create user: {result}");
@@ -135,7 +135,7 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account
                 {
                     var bracelet = bracelets.Where(x => x.SerialNumber == Input.BraceletId).FirstOrDefault();
                     bracelet.Username = Input.Email;
-                    var userToRegister = new User { Username =  Input.Email, Role = Input.Role, Birth = Input.BirthDate};
+                    var userToRegister = new User { Username =  Input.Email, Role = Input.Role, Birth = Input.BirthDate.ToString("yyyy-MM-dd") };
                     var braceletToUserResp = await _braceletService.AssociateBracialetToUser(bracelet, userToRegister);
                     Console.WriteLine($"bracelet associate with user: {braceletToUserResp.ReasonPhrase}");
                     
