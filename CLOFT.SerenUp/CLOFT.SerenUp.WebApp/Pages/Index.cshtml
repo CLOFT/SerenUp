@@ -2,9 +2,392 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    ViewData["Page"] = "home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div style="margin-right:3%;">
+    <div class="d-flex justify-content-between pt-5">
+        <h1 class="mb-3">
+            <span style="color:gray">Welcome </span>@User.Identity.Name
+            @if (@Model.AdminRole == true)
+            {
+                <br>
+                <p style="font-size:15px; color:red;">Administrator account</p>
+            }
+        </h1>
+        @if (@Model.UserBracelet != null)
+        {
+            <span id="userBracelet" class="d-none">@Model.UserBracelet.SerialNumber</span>
+        }
+        else
+        {
+            <div style="width: 70%; height:100px;">
+                <div class="alert alert-danger fade show text-center" role="alert">
+                    <strong>WARNING!</strong> BRACELET NOT ASSIGNED
+                </div>
+            </div>
+        }
+        <div>
+            <p style="color:red;"> <span id="dayOfWeek"></span> <span id="week"></span> </p>
+            <h3 id="clock"> <span id="day"></span> <span id="mounth"></span> <span id="year"></span> </h3>
+        </div>
+    </div>
+
+    <div style="width: 100%; height:100px;">
+        <div id="allertDiv" class="d-none alert alert-warning alert-dismissible fade show text-center" role="alert">
+            <strong>WARNING!</strong> BATERY LOW
+        </div>
+        <div id="fallenAllert" class="d-none alert alert-danger alert-dismissible fade show text-center" role="alert">
+            <strong>WARNING!</strong> FALLEN DETECTED - EMERGENCY CONTACT ALLERTED
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between cards">
+        <div class="card text-white  flexcard " style="background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(75,134,179,1) 100%); border-style: none;box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
+            <div type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <div style="top:10%; left:50%; position:absolute; ">
+                    <i class="fa fa-spinner fa-spin" aria-hidden="true" style="font-size:1000%; opacity:0.3;"></i>
+                </div>
+                <div class="card-body">
+                    <div style="z-index:99;">
+                        <h4 class="card-title">Serendipity </h4>
+                        <p id="serendipity" style="font-size:4rem">
+                            @if(@Model.UserBracelet != null)
+                            {
+                                @Model.Serendipity
+                            } %
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-white   flexcard" style="background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
+            <div style="top:11%; left:50%; position:absolute;" class="heart">
+                <svg style="" xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" fill-opacity="0.3" class="bi bi-heart-pulse" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01L8 2.748ZM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5Zm8.252-6.686a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162l-1.874-4.686Z" />
+                </svg>
+            </div>
+            <div class="card-body">
+                <div style="z-index:99;">
+                    <h4 class="card-title">Heart rate </h4>
+                    <p id="heartRate" style="font-size:4rem">- bpm</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(104,204,186,1) 100%); border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
+            <div style="top:11%; left:40%; position:absolute;">
+                <i class="fa-solid fa-shoe-prints" style="font-size:140px; opacity:0.3;"></i>
+            </div>
+            <div class="card-body">
+                <div style="z-index:99;">
+                    <h4 class="card-title">Steps </h4>
+                    <p id="steps" style="font-size:4rem">-</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(224,123,130,1) 0%, rgba(228,4,4,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(224,123,130,1); border-style:none; border-radius: 20px;">
+            <div style="top:9%; left:50%; position:absolute;">
+                <img src="~/Resource/OxygenBlood.png" style="width:140px; height:140px; opacity:0.4; " />
+            </div>
+            <div class="card-body">
+                <div style="z-index:99;">
+                    <h4 class="card-title">Blood saturation </h4>
+                    <p id="bloodSat" style="font-size:4rem">-</p>
+                </div>
+            </div>
+        </div>
+        <div class="collapse mb-3" id="collapseExample">
+            <div class="chart-container">
+                <canvas id="myChart" style="width:100vh; height:50vh;"></canvas>
+            </div>
+        </div>
+
+        <div id="allarmCard" class="card text-white   flexcard cardNormal" style="border-radius: 20px; border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1);">
+            <div style="top:-25%; left:50%; position:absolute; opacity:0.3;">
+                <i id="allarmIcon" class="bi bi-exclamation-triangle" style="font-size:150px; position:absolute;"></i>
+            </div>
+            <div class="card-body">
+                <div style="z-index:99;">
+                    <h4 class="card-title">Allarms</h4>
+                    <p id="allarms" style="font-size:40px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="batteryCard" class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(106,122,140,1) 0%, rgba(62,16,111,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(106,122,140,1); border-radius: 20px;">
+            <div style="left:40%; top: -40%; position:absolute;">
+                <i id="batteryIcon" class="bi bi-battery-half" style="font-size:180px; opacity:0.3; position:absolute;"></i>
+            </div>
+            <div class="card-body">
+                <div style="z-index:99;">
+                    <h4 class="card-title">Battery</h4>
+                    <p id="batteryValue" style="font-size:4rem">-</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(177,203,211,1) 0%, rgba(104,204,186,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(177,203,211,1); border-radius: 20px;">
+            <div style="top:7%; left:53%; position:absolute;" class="d-flex justify-content-center">
+                <div style="position:absolute; top:29px;" class="pulsar align-self-center">
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="currentColor" fill-opacity="0.3" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                </svg>
+            </div>
+
+            <div class="card-body">
+                <div style="z-index:99;">
+                    <h4 class="card-title">Position</h4>
+                    <span>Latitude   </span> <span id="latitude" style="font-size:2rem"></span>
+                    <p></p>
+                    <span>Longitude   </span> <span id="longitude" style="font-size:2rem"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-white   flexcard" style=" background: linear-gradient(90deg, rgba(224,123,130,1) 0%, rgba(228,4,4,1) 100%);border-style: none; box-shadow: 5px 10px 5px rgba(224,123,130,1); border-radius: 20px;">
+            <div style=" left:43%; position:absolute;">
+                <img src="~/Resource/Pressure.png" style="width:170px; height:170px; opacity:0.3;" />
+            </div>
+            <div class="card-body">
+                <div style="z-index:99;">
+                    <h4 class="card-title">Blood pressure</h4>
+                    <span>Systolic   </span> <span id="systolicPress" style="font-size:2rem"></span>
+                    <p></p>
+                    <span>Dyastolic   </span> <span id="dyastolicPress" style="font-size:2rem"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@*<script src="~/js/site.js" asp-append-version="true"></script>*@
+
+<script type="text/javascript">
+setInterval(UpdateHour, '1.1574e-8');
+setInterval(UpdateDash, 2000);
+setInterval(UpdateChart, 2000);
+
+var values = [];
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+]
+
+var data = {
+    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sanday"],
+    datasets: [{
+        label: "My week",
+        backgroundColor: "rgba(255,99,132,0.2)",
+        borderColor: "rgba(255,99,132,1)",
+        borderWidth: 2,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        data: values,
+    }]
+};
+
+var options = {
+    maintainAspectRatio: false,
+    scales: {
+        y: {
+            stacked: true,
+            grid: {
+                display: true,
+                color: "rgba(255,99,132,0.2)"
+            }
+        },
+        x: {
+            grid: {
+                display: false
+            }
+        }
+    }
+};
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data,
+
+    // Configuration options go here
+    options
+});
+
+
+
+function UpdateHour() {
+    const d = new Date();
+    document.getElementById("dayOfWeek").innerHTML = "Day " + d.getDay();
+    document.getElementById("week").innerHTML = "Week " + d.getDate();
+    document.getElementById("day").innerHTML = d.getDate() + "th";
+    var indexMounth = d.getMonth();
+    document.getElementById("mounth").innerHTML = months[indexMounth];
+    document.getElementById("year").innerHTML = d.getFullYear();
+    //document.getElementById("clock").innerHTML = d.toLocaleString();
+}
+
+
+function UpdateDash() {
+    const xhr = new XMLHttpRequest()
+
+    var id = document.getElementById("userBracelet").innerHTML;
+
+    var url = `https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/BraceletsData/${id}`;
+    
+    xhr.open("GET", url);
+
+    xhr.send()
+
+    //triggered when the response is completed
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            //parse JSON datax`x
+            mesure = JSON.parse(xhr.responseText)
+            pos = mesure[0].position;
+            positions = pos.split(",");
+            console.log(mesure[0]);
+            document.getElementById("latitude").innerHTML = positions[0];
+            document.getElementById("longitude").innerHTML = positions[1];
+            document.getElementById("heartRate").innerHTML = mesure[0].heartBeat + " bpm";
+            document.getElementById("steps").innerHTML = mesure[0].steps;
+            document.getElementById("bloodSat").innerHTML = mesure[0].oxygenSaturation + " %";
+            document.getElementById("systolicPress").innerHTML = mesure[0].bloodPressure.systolicPressure;
+            document.getElementById("dyastolicPress").innerHTML = mesure[0].bloodPressure.diastolicPressure + " mmHg";
+            document.getElementById("batteryValue").innerHTML = mesure[0].battery + " %";
+            battery = mesure[0].battery;
+
+            // if fall logic
+            let allarm = mesure[0].alarm;
+
+            if (allarm != null) {
+                if (allarm === "FALL") {
+                    document.getElementById("allarms").innerHTML = "Fallen detected";
+                    document.getElementById("allarms").style.color = "red";
+                    document.getElementById("allarmIcon").style.color = "rgb(224,123,130)";
+                    document.getElementById("allarmCard").classList.add('warning');
+                    document.getElementById("allarmCard").classList.add('danger');
+                    document.getElementById("allarmCard").classList.remove('cardNormal');
+                    document.getElementById("fallenAllert").classList.remove('d-none');
+                } else {
+                    document.getElementById("allarms").innerHTML = " - ";
+                    document.getElementById("allarms").style.color = "white";
+                    document.getElementById("allarmIcon").style.color = "white";
+                    document.getElementById("allarmCard").classList.remove('warning');
+                    document.getElementById("allarmCard").classList.remove('danger');
+                    document.getElementById("allarmCard").classList.add('cardNormal');
+                    document.getElementById("fallenAllert").classList.add('d-none');
+                }
+            }
+            // battery logic
+            if (battery < 20) {
+                document.getElementById("batteryIcon").classList.remove('bi-battery-full');
+                document.getElementById("batteryIcon").classList.remove('bi-battery-half');
+                document.getElementById("batteryIcon").classList.add('bi-battery');
+
+                document.getElementById("batteryIcon").style.color = "rgb(224,123,130)";
+                document.getElementById("batteryCard").classList.add('danger');
+                document.getElementById("allertDiv").classList.remove('d-none');
+            } else if (battery >= 20 && battery < 65) {
+                document.getElementById("batteryIcon").classList.add('bi-battery-half');
+                document.getElementById("batteryIcon").classList.remove('bi-battery');
+                document.getElementById("batteryIcon").classList.remove('bi-battery-full');
+
+                document.getElementById("batteryIcon").style.color = "white";
+                document.getElementById("batteryCard").classList.remove('danger');
+                document.getElementById("allertDiv").classList.add('d-none');
+            } else if (battery >= 65) {
+                document.getElementById("batteryIcon").classList.remove('bi-battery-half');
+                document.getElementById("batteryIcon").classList.remove('bi-battery');
+                document.getElementById("batteryIcon").classList.add('bi-battery-full');
+
+                document.getElementById("batteryIcon").style.color = "white";
+                document.getElementById("batteryCard").classList.remove('danger');
+                document.getElementById("allertDiv").classList.add('d-none');
+            }
+
+        } else if (xhr.status === 404) {
+            console.log("No records found")
+        }
+    }
+
+    //triggered when a network-level error occurs with the request
+    xhr.onerror = function () {
+        console.log("Network error occurred")
+    }
+
+    //triggered periodically as the client receives data
+    //used to monitor the progress of the request
+    xhr.onprogress = function (e) {
+        if (e.lengthComputable) {
+            //console.log(`${e.loaded} B of ${e.total} B loaded!`)
+        } else {
+            //console.log(`${e.loaded} B loaded!`)
+        }
+    }
+}
+
+function UpdateChart() {
+    const xhr = new XMLHttpRequest()
+
+    //xhr.open("GET", "https://clofttestapi.azurewebsites.net/CloftData/GetGraphData")
+    urlWeek = `https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/BraceletsData/CurrentWeek/${id}`;
+    xhr.open("GET", urlWeek)
+    //send the Http request
+    xhr.send()
+
+    //triggered when the response is completed
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            //parse JSON datax`x
+            var res = JSON.parse(xhr.responseText)
+            console.log(res);
+            values[0] = res.monday;
+            values[1] = res.tuesday;
+            values[2] = res.wednesday;
+            values[3] = res.thursday;
+            values[4] = res.friday;
+            values[5] = res.saturday;
+            values[6] = res.sunday;
+            //console.log(values);
+
+        } else if (xhr.status === 404) {
+            console.log("No records found")
+        }
+    }
+
+    //triggered when a network-level error occurs with the request
+    xhr.onerror = function () {
+        console.log("Network error occurred")
+    }
+
+    //triggered periodically as the client receives data
+    //used to monitor the progress of the request
+    xhr.onprogress = function (e) {
+        if (e.lengthComputable) {
+            //console.log(`${e.loaded} B of ${e.total} B loaded!`)
+        } else {
+            //console.log(`${e.loaded} B loaded!`)
+        }
+    }
+}
+
+
+</script>

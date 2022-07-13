@@ -1,0 +1,55 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+
+<div class="d-flex justify-content-between align-items-center h-100" style="background: linear-gradient(90deg, rgba(255,255,255,1) 32%, rgba(68,180,125,1) 100%, rgba(255,189,140,1) 100%);">
+    <div class="col-md-4">
+        <section>
+            <form method="post">
+                <h4>Log in</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger mb-2"></div>
+                <div class="form-group mb-3">
+                    <label asp-for="Input.UserName"></label>
+                    <input asp-for="Input.UserName" class="form-control" />
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <button type="submit" class="btn btn-primary" style="background-color:#44b47d; border-color:#44b47d;">Log in</button>
+                </div>
+                <div class="form-group mb-3">
+                    <p>
+                        <a asp-page="./ForgotPassword" style="color:#44b47d;">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" style="color:#44b47d;">Register as a new user</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div>
+        <img src="~/Resource/login.png" />
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

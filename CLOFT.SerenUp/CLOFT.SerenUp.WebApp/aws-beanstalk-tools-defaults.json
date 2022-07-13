@@ -1,0 +1,22 @@
+
+{
+    "region" : "eu-west-1",
+    "configuration" : "Debug",
+    "framework"     : "net6.0",
+    "self-contained" : true,
+    "application"    : "Cloft-test",
+    "environment"    : "Clofttest-env",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.3.3 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "cloftserenupwebapp-dev",
+    "instance-type"        : "t3a.medium",
+    "key-pair"             : "clod-2021-stefanM",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx",
+    "app-path"             : "/",
+    "iis-website"          : "Default Web Site"
+}

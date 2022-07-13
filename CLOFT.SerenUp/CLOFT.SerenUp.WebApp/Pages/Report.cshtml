@@ -1,0 +1,21 @@
+﻿@page
+@model CLOFT.SerenUp.WebApp.Pages.ReportModel
+@{
+    ViewData["Title"] = "Report page";
+    ViewData["Page"] = "report";
+}
+<h1 style="text-align: center; margin-top: 3rem; font-weight: 800;">Admin Report</h1>
+<div class="d-flex align-content-around flex-wrap" style="margin-top: 6rem; margin-left: 2rem;">
+    @foreach (var item in @Model.S3FilesList)
+    {
+        <div class="mx-4 my-4" style="box-shadow: 5px 10px 8px #888888; background-color: whitesmoke; width: 20rem;">
+            <div class="card-body d-flex justify-content-around">
+                <h5 class="card-title">@item.Substring(8)</h5>
+                <form method="post" asp-page="Report">
+                    <input class="d-none" asp-for="@Model.objKey" type="text" value="@item" />
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-download"></i></button>
+                </form>
+            </div>
+        </div>
+    }
+</div>
