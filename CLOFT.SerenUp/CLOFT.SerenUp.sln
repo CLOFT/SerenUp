@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLOFT.SerenUp.WebApp", "CLOFT.SerenUp.WebApp\CLOFT.SerenUp.WebApp.csproj", "{B700E8BF-A5E5-4C04-A98A-9BC34A905BC4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B700E8BF-A5E5-4C04-A98A-9BC34A905BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B700E8BF-A5E5-4C04-A98A-9BC34A905BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B700E8BF-A5E5-4C04-A98A-9BC34A905BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B700E8BF-A5E5-4C04-A98A-9BC34A905BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D72F92D-5122-42B2-9E2C-9690E9E1BFF6}
+	EndGlobalSection
+EndGlobal
