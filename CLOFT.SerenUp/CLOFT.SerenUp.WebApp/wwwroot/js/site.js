@@ -115,6 +115,7 @@ function UpdateDash() {
     const xhr = new XMLHttpRequest()
 
     var id = document.getElementById("userBracelet").innerHTML;
+
     var url = `https://hepj2fzca6.execute-api.eu-west-1.amazonaws.com/api/BraceletsData/${id}`;
     xhr.open("GET", url);
 
