@@ -97,12 +97,15 @@ namespace CLOFT.SerenUp.WebApp.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (!User.Identity.IsAuthenticated)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return Redirect("/Identity/Account/Login");
             }
-
+            //if (user == null)
+            //{
+            //    return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            //}
+            var user = await _userManager.GetUserAsync(User);
             await LoadAsync(user);
             return Page();
         }

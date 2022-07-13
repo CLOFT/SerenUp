@@ -24,42 +24,42 @@
         <div style="width:100px;"></div>
         <div id="sidebar-wrapper" class="d-flex flex-column  bg-light ml-4 shadow bg- rounde h-100" style="position: fixed;">
 
-            <ul class="sidebar-nav nav flex-column mb-auto text-center" style="margin-top:2.5rem">
-                <li class="mb-5">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <ul class="sidebar-nav nav flex-column mb-auto text-center" style="margin-top:2.5rem">
+                    <li class="mb-5">
 
-                    <img src="~/Resource/logo2.png" width="70" height="70">
+                        <img src="~/Resource/logo2.png" width="70" height="70">
 
-                </li>
-                <li id="home" class="mb-4 border-start border-warning border-4" style="margin-top:7rem;">
-
-                    <a class="nav-link text-black" asp-area="" asp-page="/Index">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-heart" viewBox="0 0 16 16">
-                            <path d="M8 6.982C9.664 5.309 13.825 8.236 8 12 2.175 8.236 6.336 5.309 8 6.982Z" />
-                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.707L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.646a.5.5 0 0 0 .708-.707L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
-                        </svg>
-                    </a>
-
-                </li>
-                <li id="profile" class="mb-4">
-
-                    <a class="nav-link text-black" asp-area="Identity" asp-page="/Account/Manage/Index">
-                        <img src="~/Resource/information.png" width="27" height="27">
-                    </a>
-
-                </li>
-
-                @if (User.HasClaim(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" && c.Value == "admin"))
-                {
-                    <li id="report" class="mb-4">
-                        <a class="nav-link text-black" asp-area="" asp-page="/Report">
-                            <img src="~/Resource/icon-admin.png" width="30" height="30">
-                        </a>
                     </li>
-                }
+                    <li id="home" class="mb-4 border-start border-warning border-4" style="margin-top:7rem;">
 
+                        <a class="nav-link text-black" asp-area="" asp-page="/Index">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-heart" viewBox="0 0 16 16">
+                                <path d="M8 6.982C9.664 5.309 13.825 8.236 8 12 2.175 8.236 6.336 5.309 8 6.982Z" />
+                                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.707L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.646a.5.5 0 0 0 .708-.707L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
+                            </svg>
+                        </a>
 
+                    </li>
+                    <li id="profile" class="mb-4">
 
-            </ul>
+                        <a class="nav-link text-black" asp-area="Identity" asp-page="/Account/Manage/Index">
+                            <img src="~/Resource/information.png" width="27" height="27">
+                        </a>
+
+                    </li>
+
+                    @if (User.HasClaim(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" && c.Value == "admin"))
+                    {
+                        <li id="report" class="mb-4">
+                            <a class="nav-link text-black" asp-area="" asp-page="/Report">
+                                <img src="~/Resource/icon-admin.png" width="30" height="30">
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none " id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="~/Resource/Logout.png" alt="" width="40" height="40" class="rounded-circle">
@@ -100,16 +100,16 @@
 
 
 <script type="text/javascript">
-    var pages = ["home", "report", "profile"];
+    $(document).ready(function() {
+        var pages = ["home", "report", "profile"];
 
-    function myFunction(page) {
-        pages.forEach((val, ind) => {
-            document.getElementById(val).classList.remove('border-start', 'border-warning', 'border-4');
-        });
-        document.getElementById(page).classList.add('border-start', 'border-warning', 'border-4');
-        console.log(page)
-    }
-
-
-    myFunction('@ViewData["Page"]')
+        function myFunction(page) {
+            pages.forEach((val, ind) => {
+                document.getElementById(val).classList.remove('border-start', 'border-warning', 'border-4');
+            });
+            document.getElementById(page).classList.add('border-start', 'border-warning', 'border-4');
+            console.log(page)
+        }
+        myFunction('@ViewData["Page"]')
+    });
 </script>
